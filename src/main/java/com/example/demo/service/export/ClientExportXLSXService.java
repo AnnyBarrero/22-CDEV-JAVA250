@@ -18,12 +18,14 @@ import java.util.List;
 
 @Service
 public class ClientExportXLSXService {
+
     @Autowired
     private ClientRepository clientRepository;
 
     public void export(OutputStream outputStream) throws IOException {
         // google => apache poi
         Workbook workbook = new XSSFWorkbook(); //=> Fichier
+
         //créer un objet style
         CellStyle cellStyleHeader = workbook.createCellStyle();
         Font fontHeader = workbook.createFont();

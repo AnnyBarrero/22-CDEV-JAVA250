@@ -62,7 +62,7 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
     }
     private void createFacture(Client c1, Article a, int ia, Article b, int ib) {
         Facture facture = createFacture(c1, a, ia);
-        //je rajoute une ligne
+
         LigneFacture ligneFacture = new LigneFacture();
         ligneFacture.setArticle(b);
         ligneFacture.setQuantite(ib);

@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
  * Repository permettant l'interraction avec la base de données pour les factures.
  */
 @Repository
-public class FactureRepository extends JpaRepository<Facture, Long> {
+public interface FactureRepository extends JpaRepository<Facture, Long> {
+
 }

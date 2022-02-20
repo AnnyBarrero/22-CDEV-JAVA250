@@ -16,7 +16,8 @@ import static java.util.stream.Collectors.toList;
  */
 @Service
 @Transactional
-public class ClientServiceImpl {
+public class ClientServiceImpl implements ClientService {
+
     private ClientRepository clientRepository;
     private ClientMapper clientMapper;
 
@@ -29,4 +30,5 @@ public class ClientServiceImpl {
     public List<ClientDto> findAll() {
         return clientRepository.findAll().stream().map(client -> clientMapper.clientDto(client)).collect(toList());
     }
+
 }

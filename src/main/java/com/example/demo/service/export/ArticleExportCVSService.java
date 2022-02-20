@@ -24,6 +24,7 @@ public class ArticleExportCVSService {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append(article.getLibelle());
             stringBuilder.append(";");
+
             DecimalFormat df = new DecimalFormat("###,###,###.00");
             df.setCurrency(Currency.getInstance(Locale.FRANCE));
             stringBuilder.append(df.format(article.getPrix()));
