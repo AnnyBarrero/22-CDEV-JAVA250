@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Article;
 import com.example.demo.entity.Client;
+import com.example.demo.entity.Facture;
+import com.example.demo.entity.LigneFacture;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Classe permettant d'insérer des données dans l'application.
@@ -36,10 +39,43 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
         Article a5 = createArticle("Jay nothing", 2, 0, "https://static.hitek.fr/img/actualite/2016/08/26/61vu-jqjygl-sy679.jpg");
         Article a6 = createArticle("UN AFFINEUR DE VISAGE", 52, 0, "https://static.hitek.fr/img/actualite/2016/08/26/w_41r-1yapf5l.jpg");
 
-        Client c1 = createClient("John", "Doe", LocalData.of(2000, 6, 4))
-    }
+        Client c1 = createClient("Anny", "Barrero", LocalDate.of(1991, 03, 27));
+        Client c2 = createClient("Yannick","Marabeuf",LocalDate.of(1993,02,04));
 
-    private createClient(String prenom, String nom, LocalDate dateNaissance){
+        createFacture(c1, a1, 2);
+        createFacture(c1, a1, 2, a3, 1);
+        createFacture(c2, a6, 10);
+    }
+    private Facture createFacture(Client c1, Article a1, int i) {
+        Facture facture = new Facture();
+        facture.setClient(c1);
+        facture.setLigneFactures(new ArrayList<>());
+
+        LigneFacture ligneFacture = new LigneFacture();
+        ligneFacture.setArticle(a1);
+        ligneFacture.setQuantite(i);
+        ligneFacture.setFacture(facture);
+
+        entityManager.persist(facture);
+        entityManager.persist(ligneFacture);
+        return facture;
+    }
+    private void createFacture(Client c1, Article a, int ia, Article b, int ib) {
+        Facture facture = createFacture(c1, a, ia);
+        //je rajoute une ligne
+        LigneFacture ligneFacture = new LigneFacture();
+        ligneFacture.setArticle(b);
+        ligneFacture.setQuantite(ib);
+        ligneFacture.setFacture(facture);
+        entityManager.persist(ligneFacture);
+    }
+    private Client createClient(String nom , String prenom, LocalDate dateNais){
+        Client client = new Client();
+        client.setNom(nom);
+        client.setPrenom(prenom);
+        client.setDateNais(dateNais);
+        entityManager.persist(client);
+        return client;
 
     }
     private Article createArticle(String libelle, double prix, int stock, String imageUrl) {
@@ -51,5 +87,7 @@ public class InitData implements ApplicationListener<ApplicationReadyEvent> {
         entityManager.persist(a1);
         return a1;
     }
+
+
 
 }
